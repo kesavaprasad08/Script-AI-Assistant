@@ -2,7 +2,7 @@ import Header from "../Header";
 
 const Home = () => {
   return (
-    <div>
+    <>
       <Header />
       <div
         className="h-screen flex"
@@ -25,7 +25,7 @@ const Home = () => {
         </div>  
       </div>
       <div className="h-screen bg-black"></div>
-    </div>
+    </>
   );
 };
 export default Home;
