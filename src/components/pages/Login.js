@@ -1,15 +1,25 @@
 import Header from "../Header";
-import axios from 'axios';
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import AuthContext from "../../store/authContext";
+import { useContext } from "react";
 
 const Login = () => {
-  const submitHandler = async(e) => {
-    try{ 
-    e.preventDefault();
-const response = await axios.post('http://localhost:4000/auth/login',{email:e.target.email.value,password:e.target.password.value})
-console.log(response)
-    }
-    catch(err){
-        console.log(err)
+  const navigate = useNavigate();
+  const authCtx = useContext(AuthContext);
+  const submitHandler = async (e) => {
+    try {
+      e.preventDefault();
+      const response = await axios.post("http://localhost:4000/auth/login", {
+        email: e.target.email.value,
+        password: e.target.password.value,
+      });
+      if (response.data.message === "User Authorized") {
+        authCtx.login(response.data.token);
+        navigate("/dashboard");
+      }
+    } catch (err) {
+      console.log(err);
     }
   };
   return (
@@ -30,7 +40,7 @@ console.log(response)
           required
         />
         <button className="bg-blue-500 text-white p-2 rounded" type="submit">
-        Login
+          Login
         </button>
       </form>
     </div>
